@@ -6,8 +6,8 @@
 </description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 07 Mar 2019 13:50:06 -0800</pubDate>
-    <lastBuildDate>Thu, 07 Mar 2019 13:50:06 -0800</lastBuildDate>
+    <pubDate>Thu, 14 Mar 2019 16:34:13 -0700</pubDate>
+    <lastBuildDate>Thu, 14 Mar 2019 16:34:13 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -245,6 +245,8 @@
 
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;a name=&quot;section8&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;It is clear this model has great potential for language processing and text generation. For a word-level model to produce these results on a relatively small dataset is frankly quite remarkable. As an exploratory project seeking to demonstrate the potential of LSTM architectures for generating human-readable text, this is a tremendous starting point. Consumer and enterprise-level use-cases for this functionality are broad and there’s no doubt that machine-generated language processing will only become more prevalent in the coming years.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/crooner&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/center&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 01 Feb 2019 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2019/02/01/project-crooner/</link>
@@ -293,6 +295,15 @@
 &lt;h2 id=&quot;findings&quot;&gt;Findings&lt;/h2&gt;
 &lt;p&gt;During EDA I found that Libertarians generally had higher word and character counts for a given document compared with Conservatives. While Count Vectorization produced similar top word lists, Tfidf Vectorization was able to identify words that had a stronger association with each groups individual ideology. As such, Tfidf data was used for modeling.&lt;/p&gt;
 
+&lt;p&gt;Most frequent words for each category:
+&lt;img src=&quot;/assets/images/reddit_nlp_frequency.svg&quot; alt=&quot;Word Frequencies&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Singular Value Decomposition, First 2 Components:
+&lt;img src=&quot;/assets/images/reddit_nlp_SVD.svg&quot; alt=&quot;SVD&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Feature Importance:
+&lt;img src=&quot;/assets/images/reddit_nlp_features.svg&quot; alt=&quot;SVD&quot; /&gt;&lt;/p&gt;
+
 &lt;p&gt;My baseline prediction was 53.8% accuracy by predicting the positive class for all samples.&lt;/p&gt;
 
 &lt;p&gt;The Random Forest model showed strong performance with the training data however it performed poorly on the validation data, showing signs of overfitting. The predictive accuracy on untrained data was only 70.5%, less than the naive bayes model. It’s likely this is was a result of using a small number of trees for fitting, and considering a larger number for each split would produce a more generalizable result.&lt;/p&gt;
@@ -314,6 +325,8 @@
 
 &lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
 &lt;p&gt;This preliminary investigation showed strong positive results and set the groundwork for further investigations. Continuing with a wider group of model algorithms as well as allocating more compute to tuning our models is likely to produce a generalizable model that predicts with a much higher accuracy. For initial studies, the Multinomial Naive Bayes may serve as the minimum viable product to put this classification system into production.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/reddit_NLP&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/center&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Jan 2019 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2019/01/01/project-reddit_NLP/</link>
@@ -337,19 +350,20 @@
       </item>
     
       <item>
-        <title>Ames Housing</title>
+        <title>Ames Housing Price Prediction</title>
         <description>&lt;p&gt;I developed and optimized a production model based on the canonical Ames, IA dataset that can be used as a proof of concept model for a consumer-grade appraisal tool. I built a model with ±$22902.22 predictive performance, on par with other web-based consumer pricing tools.&lt;/p&gt;
 
 &lt;h2 id=&quot;problem-statement&quot;&gt;Problem Statement&lt;/h2&gt;
-
 &lt;p&gt;The goal of this project is to identify and optimize a production model based on the Ames, IA dataset that can be used as a proof of concept model for a consumer-grade appraisal tool. The input will be numeric and non-numeric home feature data that will be used to return an accurate sale price prediction for the given home. Model performance will be judged by RMSE and $r^2 scoring on a test dataset after fitting an algorithm with training data. After refining this model, suggestions for generalization, implementation, as well as enterprise/commercial grade application will be reviewed.&lt;/p&gt;
 
 &lt;h2 id=&quot;executive-summary&quot;&gt;Executive Summary&lt;/h2&gt;
 &lt;p&gt;I identified a model with ±$22902.22 predictive performance, on par with other web-based consumer pricing tools &lt;a href=&quot;https://realestate.usnews.com/real-estate/articles/7-online-tools-to-help-you-estimate-your-homes-value&quot;&gt;(Source)&lt;/a&gt;. This was based on 65 home features that can continue to be refined for implementation in an app environment. Since many of the features relate to fixed home characteristics, the actual UX flow will be largely automated due to availability of this data in municipal databases.&lt;/p&gt;
 
 &lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
-
 &lt;p&gt;The Ames dataset is well known within the data-science community. By leveraging the predictive power of recursive model optimization processes we can identify trends across home features and geographic markets that are not immediately obvious even to seasoned professionals. Identifying the relative contribution these features make to overall home value will allow consumers and real estate professions work with greater confidence when listing properties as sellers and more quickly identify underpriced homes as buyers, resulting in higher profit margins or greater savings, resp. Additionally, by identifying home features that contribute more significantly to home value, both investors and home owners can better allocate resources for home restorations and other capital investments. This model can also serve as an additional validation tool for home appraisers or be offered as a consumer product in lieu of employing a professional appraiser.&lt;/p&gt;
+
+&lt;p&gt;The current appraisal timeline:
+&lt;img src=&quot;/assets/images/ames_housing_timeline.jpg&quot; alt=&quot;appraisal timeline&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;According to U.S. News &amp;amp; World Report the top 7 consumer-grade home pricing tools can show over ±$100,000 in variation in home valuation &lt;a href=&quot;https://realestate.usnews.com/real-estate/articles/7-online-tools-to-help-you-estimate-your-homes-value&quot;&gt;(Source)&lt;/a&gt;. Given the wide availability of property data maintained by county clerks offices and other municipal offices, the potential predictive power of regression-based CMA is stronger than ever.&lt;/p&gt;
 
@@ -359,7 +373,13 @@
 &lt;p&gt;Refer to http://jse.amstat.org/v19n3/decock/DataDocumentation.txt&lt;/p&gt;
 
 &lt;h2 id=&quot;findings&quot;&gt;Findings&lt;/h2&gt;
-&lt;p&gt;In this project I found that the LassoCV model delivered the lowest RMSE (22902.21) and r2 score (90.57), narrowing predictions to $22902.22. The next best model algorithm was RidgeCV, followed by ElasticNetCV, Linear Regression, and finally KNNeighbors. The Features of most interest were:&lt;/p&gt;
+&lt;p&gt;In this project I found that the LassoCV model delivered the lowest RMSE (22902.21) and r2 score (90.57), narrowing predictions to $22902.22. The next best model algorithm was RidgeCV, followed by ElasticNetCV, Linear Regression, and finally KNNeighbors.&lt;/p&gt;
+
+&lt;p&gt;Predicted vs. True values for the LassoCV production model:
+&lt;img src=&quot;/assets/images/ames_housing_model.jpg&quot; alt=&quot;production model&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The Features of most interest were:
+&lt;img src=&quot;/assets/images/ames_housing_features.jpg&quot; alt=&quot;feature importance&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Beta 0:&lt;/p&gt;
 &lt;ul&gt;
@@ -649,6 +669,8 @@
 
 &lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
 &lt;p&gt;From my model comparisons I concluded that regularization methods such as Lasso and Ridge perform better than other modeling algorithms. This is likely due to many of the features having some level of colinearity that in other models would be outright excluded. For Lasso and Ridge they are still able to affect our predictions, however their impact is attenuated to avoid over-weighting. Since Lasso and Ridge both performed well, ElasticNet can probably be tuned to capture the best qualities of each model and increase predictive accuracy.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/ames_housing&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/center&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 01 Dec 2018 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2018/12/01/project-ames_housing/</link>
