@@ -6,13 +6,13 @@
 </description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 14 Mar 2019 16:34:13 -0700</pubDate>
-    <lastBuildDate>Thu, 14 Mar 2019 16:34:13 -0700</lastBuildDate>
+    <pubDate>Thu, 14 Mar 2019 16:37:56 -0700</pubDate>
+    <lastBuildDate>Thu, 14 Mar 2019 16:37:56 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>Crooner: A Love Song Lyric Generator</title>
-        <description>&lt;p&gt;I built love-song lyric generator trained on a real-world dataset made up of existing tracks and returning entirely new song lyrics based on a user generated seed text.&lt;/p&gt;
+        <description>&lt;p&gt;I built love-song lyric generator trained on a real-world dataset, returning an entirely new song lyrics based on a user generated seed text.&lt;/p&gt;
 
 &lt;p&gt;Data was collected from Spotify and Genius lyrics and modeled with a LSTM Neural Network to create entirely new songs.&lt;/p&gt;
 
