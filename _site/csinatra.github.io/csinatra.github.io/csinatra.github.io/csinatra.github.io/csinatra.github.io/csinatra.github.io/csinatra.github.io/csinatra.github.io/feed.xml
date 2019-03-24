@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Portfolio</title>
+    <title>Chris Sinatra</title>
     <description>A collection of Data Science projects by Chris Sinatra
 </description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 01 Mar 2019 19:03:00 -0800</pubDate>
-    <lastBuildDate>Fri, 01 Mar 2019 19:03:00 -0800</lastBuildDate>
+    <pubDate>Thu, 07 Mar 2019 11:39:02 -0800</pubDate>
+    <lastBuildDate>Thu, 07 Mar 2019 11:39:02 -0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
