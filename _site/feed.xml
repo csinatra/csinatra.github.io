@@ -6,17 +6,15 @@
 </description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 24 Mar 2019 11:39:20 -0700</pubDate>
-    <lastBuildDate>Sun, 24 Mar 2019 11:39:20 -0700</lastBuildDate>
+    <pubDate>Sun, 24 Mar 2019 13:04:24 -0700</pubDate>
+    <lastBuildDate>Sun, 24 Mar 2019 13:04:24 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>Crooner: A Love Song Lyric Generator</title>
-        <description>&lt;p&gt;I built love-song lyric generator trained on a real-world dataset, returning an entirely new song lyrics based on a user generated seed text.&lt;/p&gt;
+        <description>&lt;p&gt;The problem of de novo text generation has direct application in fields such as social media content generation, direct response marketing, predictive text generation, or text-based customer service correspondence. To explore this space, I built love-song lyric generator trained on a real-world dataset, returning an entirely new song lyrics based on a user generated seed text. Data was collected from Spotify and Genius lyrics and modeled with a LSTM Neural Network to create entirely new songs.&lt;/p&gt;
 
-&lt;p&gt;Data was collected from Spotify and Genius lyrics and modeled with a LSTM Neural Network to create entirely new songs.&lt;/p&gt;
-
-&lt;p&gt;The problem of de novo text generation has direct application in fields such as social media content generation, direct response marketing, predictive text generation, or text-based customer service correspondence. This may also serve as a foundational underpinning for complete song or voice generation models which may be used across a variety of Enterprise applications.&lt;/p&gt;
+&lt;p&gt;This may also serve as a foundational underpinning for complete song or voice generation models which may be used across a variety of Enterprise applications.&lt;/p&gt;
 
 &lt;h2 id=&quot;problem-statement&quot;&gt;Problem Statement&lt;a name=&quot;section1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This project aims to build a word-level love-song lyric generator trained on a real-world dataset made up of existing tracks and returning entirely new song lyrics based on a user generated seed text.&lt;/p&gt;
@@ -273,14 +271,10 @@
     
       <item>
         <title>New Light Technologies: Disaster Locator</title>
-        <description>&lt;h1 id=&quot;locate-disasters-with-twitter&quot;&gt;Locate Disasters with Twitter&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;What keywords help us classify a tweet as relevant to a disaster?&lt;/li&gt;
-  &lt;li&gt;How can we best determine where to direct resources towards using the geo coordinates of relevant tweets?&lt;/li&gt;
-&lt;/ul&gt;
+        <description>&lt;p&gt;The client, Natural Light Technologies, is a FEMA contractor focusing on improving disaster detection, response, and resource allocation. This project focuses on leveraging Twitter data to identify the location of disaster survivors to allocate emergency response resources based on urgency. This has direct application to challenges encountered by response teams including: detecting a current emergency event, identifying social media keywords and hashtags to filter relevant content, ranking urgency based context, and using location data to direct rescue efforts.&lt;/p&gt;
 
 &lt;h2 id=&quot;problem-statement&quot;&gt;Problem Statement&lt;/h2&gt;
-&lt;p&gt;The client, Natural Light Technologies, is a FEMA contractor focusing on improving disaster detection, response, and resource allocation. Our project focuses on leveraging Twitter data to identify the location of disaster survivors to allocate emergency response resources based on urgency. This has direct application to challenges encountered by response teams including: detecting a current emergency event, identifying social media keywords and hashtags to filter relevant content, ranking urgency based context, and using location data to direct rescue efforts.&lt;/p&gt;
+&lt;p&gt;The core focus of this project is leveraging Twitter data to detect an emergency event, locate survivors, and direct emergency response resources based on urgency. Breaking this down, the main challenges are developing and applying an NLP driven sentiment analysis to separate emergencies from non-emergencies and rank by urgency, and to utilize location data to pinpoint those individuals in an easily accessible format. This project has the potential to streamline disaster response efforts, improving response time, increasing rescue efficiency, and reducing disaster related morbidity and mortality.&lt;/p&gt;
 
 &lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
 
@@ -527,9 +521,7 @@ We can easily determine how likely a tweet will be classified as &lt;code class=
     
       <item>
         <title>Political Subgroup Identification on Reddit</title>
-        <description>&lt;p&gt;I used Natural Language Processing techniques to identify linguistic differences between closely related but ideologically distinct political subgroups.&lt;/p&gt;
-
-&lt;p&gt;In this case, the groups of interest are Conservatives and Libertarians. Creating accurate classification models has application in assessing journalistic sources as well as optimizing communications to create a deeper connection with the target audience.&lt;/p&gt;
+        <description>&lt;p&gt;Creating accurate classification models has application in assessing journalistic sources as well as optimizing communications to create a deeper connection with the target audience. To explore this space, I used Natural Language Processing techniques to identify linguistic differences between closely related but ideologically distinct political subgroups. In this case, the groups of interest are Conservatives and Libertarians.&lt;/p&gt;
 
 &lt;p&gt;My model classified my data with 72.4% accuracy, showing a positive proof of concept. The best model was multinomial naive bayes, a relatively simple model that suggests there is room for significant improvement as I move toward more sophisticated models. The baseline accuracy for my dataset was 53.8%.&lt;/p&gt;
 
