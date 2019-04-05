@@ -6,8 +6,8 @@
 </description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 15 Mar 2019 15:59:49 -0700</pubDate>
-    <lastBuildDate>Fri, 15 Mar 2019 15:59:49 -0700</lastBuildDate>
+    <pubDate>Sun, 24 Mar 2019 12:10:08 -0700</pubDate>
+    <lastBuildDate>Sun, 24 Mar 2019 12:10:08 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -272,6 +272,255 @@
       </item>
     
       <item>
+        <title>New Light Technologies: Disaster Locator</title>
+        <description>&lt;h2 id=&quot;problem-statement&quot;&gt;Problem Statement&lt;/h2&gt;
+
+&lt;p&gt;The client, Natural Light Technologies, is a FEMA contractor focusing on improving disaster detection, response, and resource allocation. Our project focuses on leveraging Twitter data to identify the location of disaster survivors to allocate emergency response resources based on urgency. This has direct application to challenges encountered by response teams including: detecting a current emergency event, identifying social media keywords and hashtags to filter relevant content, ranking urgency based context, and using location data to direct rescue efforts.&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;Twitter is a social media platform where users can post and interact with messages known as tweets. We searched tweets using a custom list of search terms relevant to disasters.&lt;/p&gt;
+
+&lt;p&gt;Keywords are words or phrases which will be used to determine the relevance of a tweet and classify it. There are two classes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;On topic:&lt;/strong&gt; Tweets that contain keywords relevant to the current disaster.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Off topic:&lt;/strong&gt; Tweets that contain our search terms but are not referring to the disaster.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;data-dictionary&quot;&gt;Data Dictionary&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Feature&lt;/th&gt;
+      &lt;th&gt;Data Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;id&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;Unique Tweet id returned by the Twitter API&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;text&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;Text from the Tweet&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;label_on-topic&lt;/td&gt;
+      &lt;td&gt;bool&lt;/td&gt;
+      &lt;td&gt;Label based on relatedness to the disaster. Classes are ‘false’ for off-topic or ‘true’ for on-topic&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;disaster_type&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;Disaster type. Classes are ‘flood’, ‘hurricane’, and ‘tornado’&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;processed&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;Regex cleaned text mapping to lowercase, removing excess whitespace characters, removing links, and removing symbols.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;tokenized&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;List of words from the original Tweet split into single and 2-word tokens&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lemmatized&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;List of tokens converted into their root lemmatized form&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;approach&quot;&gt;Approach&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;1. Data Collection&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Train&lt;/strong&gt;: From an external source, we gathered a labeled dataset to explore if we could correctly classify a natural disaster based on the contents of a tweet. &lt;br /&gt;
+    (Source: &lt;a href=&quot;http://crisislex.org/data-collections.html#CrisisLexT6&quot;&gt;CrisisLex Disaster&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Test&lt;/strong&gt;: Using the Twitter standard tweet search API, we collected tweets using search terms relevant to current disasters and geo coordinates of current disasters. $Xnumber$ tweets were collected from January 6, 2019 - January 16, 2019. We extracted the text and bounding box coordinates.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. Exploratory Data Analysis and Cleaning&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For a better understanding of the data, we performed exploratory data analysis. With the text data, we exercised standard natural language processing techniques such as tokenizing and lemmatizing. Then we split the data into train and test dataset and performed TF-IDF vectorizing.&lt;/p&gt;
+
+&lt;p&gt;We want to use TF-IDF to determine which words are most discriminating between tweets. Words that occur frequently are penalized and rare words are given more influence in our model.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The n-gram range was set with a lower bound of 1 and an upper bound of 2 so that word sequences contain at least one word and up to two words.&lt;/li&gt;
+  &lt;li&gt;Filter out commonly used words in English.&lt;/li&gt;
+  &lt;li&gt;Ignore terms that occur in less than 25 documents of the corpus.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;3. Preprocessing and Modeling&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Sandy Hurricane&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Baseline Model:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 61.33%&lt;/li&gt;
+      &lt;li&gt;If we classify all tweets as being on-topic, we will be predicting correctly 61.33% of the time.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Random Forest:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 92.49%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 61.33%.&lt;/li&gt;
+      &lt;li&gt;The model is suffering from high variance, with our training score being roughly 4.45% higher than our test score.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Logistic Regression:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 96.06%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 61.33% and our Random Forest of 92.49%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 0.8% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Oklahoma Tornado&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Baseline Model:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 53.84%&lt;/li&gt;
+      &lt;li&gt;If we classify all tweets as being on-topic, we will be predicting correctly 53.84% of the time.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Random Forest:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 93.59%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 4.15% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Logistic Regression:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 97.28%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 1% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Alberta Floods and Queensland Flood&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Baseline Model:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 52.85%&lt;/li&gt;
+      &lt;li&gt;If we classify all tweets as being on-topic, we will be predicting correctly 53.84% of the time.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Random Forest:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 95.95%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 2.61% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Logistic Regression:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 97.28%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 1% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;All Disasters&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Baseline Model:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 53.84%&lt;/li&gt;
+      &lt;li&gt;If we classify all tweets as being on-topic, we will be predicting correctly 53.84% of the time.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Random Forest:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 94.42%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 4.41% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Logistic Regression:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 98.03%&lt;/li&gt;
+      &lt;li&gt;
+        &lt;ul&gt;
+          &lt;li&gt;The accuracy scores are greater than our baseline model of 53.84%.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 0.31% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;4. Mapping Simulation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Geo-coordinates are randomly generated for tweets. These tweets are then mapped, with red representing &lt;code class=&quot;highlighter-rouge&quot;&gt;on-topic&lt;/code&gt; and blue representing &lt;code class=&quot;highlighter-rouge&quot;&gt;off-topic&lt;/code&gt; to better visualize disaster location.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;5. Proof of Concept&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We query tweets in Malibu, CA and Riverside, CA with flood-related search terms. We cleaned, preprocessed and modeled these raw tweets using the pipeline outlined in previous notebooks.&lt;/p&gt;
+
+&lt;h2 id=&quot;model-comparison&quot;&gt;Model Comparison&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Advantages with Random Forest&lt;/strong&gt;: The model is more sophisticated and may perform better on less obvious data which can may mean less data preprocessing.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Advantages with Logisitic Regression&lt;/strong&gt;:
+We can easily determine how likely a tweet will be classified as &lt;code class=&quot;highlighter-rouge&quot;&gt;on-topic&lt;/code&gt; by taking the exponential of the log odds of words. Even though Random Forest informs us about feature importance, we cannot quickly determine the information gained to classify a tweet as &lt;code class=&quot;highlighter-rouge&quot;&gt;on-topic&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusions-and-recommendations&quot;&gt;Conclusions and Recommendations&lt;/h2&gt;
+&lt;p&gt;Given a training set, we were able to classify disasters with high confidence based on the context of an individual tweet. This is important as given an unseen set of tweets, we are able to identify if a disaster is occurring. We randomly assigned geo coordinates to the training set to simulate a real-life scenario in which first responders would benefit from knowing the specific locations on a map to contain the disaster at hand.&lt;/p&gt;
+
+&lt;p&gt;We simulated such process when we gathered real-life flood related tweets. Applying the previously built pipeline for our training data, we classified with high accuracy that a real tweet can be classified into its respective disaster category.&lt;/p&gt;
+
+&lt;h2 id=&quot;next-steps&quot;&gt;Next Steps&lt;/h2&gt;
+
+&lt;p&gt;There were three areas that we wanted to improve on:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lack of recent real world tweet data&lt;/strong&gt;: We were unable to find sufficient recent real world disaster tweets from which to test our trained models on. The raw data we were able to collect were not labeled as relevant or not which limited the models we wanted to use.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lack of real geo coordinates&lt;/strong&gt;: We were unable to gather real geo coordinates. Instead we had generated hypothetical geo coordinates of different tweets to mimic a natural disaster. Had we had access to the actual geo-coordinates, we could have accurately simulated a disaster through our plot.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lack of compute&lt;/strong&gt;: With more computing power, we could have scaled our analysis to gather more tweets and run our models handle more tweets and provide a more confident model.&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/nlt_twitter&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 01 Jan 2019 00:00:00 -0800</pubDate>
+        <link>https://chrissinatra.dev/2019/01/01/project-nlt/</link>
+        <guid isPermaLink="true">https://chrissinatra.dev/2019/01/01/project-nlt/</guid>
+        
+        <category>projects</category>
+        
+        <category>NLP</category>
+        
+        <category>n-grams</category>
+        
+        <category>Tf-idf</category>
+        
+        <category>Random Forest</category>
+        
+        <category>Topic modeling</category>
+        
+        <category>Classification</category>
+        
+        <category>Twitter</category>
+        
+        <category>Sentiment Analysis</category>
+        
+        <category>New Light Technologies</category>
+        
+        <category>Disaster</category>
+        
+        
+      </item>
+    
+      <item>
         <title>Political Subgroup Identification on Reddit</title>
         <description>&lt;p&gt;I used Natural Language Processing techniques to identify linguistic differences between closely related but ideologically distinct political subgroups.&lt;/p&gt;
 
@@ -347,350 +596,6 @@
         <category>classification</category>
         
         <category>multinomial naive bayes</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Ames Housing Price Prediction</title>
-        <description>&lt;p&gt;I developed and optimized a production model based on the canonical Ames with ±$22902.22 predictive performance, on par with current consumer-grade pricing tools.&lt;/p&gt;
-
-&lt;h2 id=&quot;problem-statement&quot;&gt;Problem Statement&lt;/h2&gt;
-&lt;p&gt;The goal of this project is to identify and optimize a production model based on the Ames, IA dataset that can be used as a proof of concept model for a consumer-grade appraisal tool. The input will be numeric and non-numeric home feature data that will be used to return an accurate sale price prediction for the given home. Model performance will be judged by RMSE and $r^2 scoring on a test dataset after fitting an algorithm with training data. After refining this model, suggestions for generalization, implementation, as well as enterprise/commercial grade application will be reviewed.&lt;/p&gt;
-
-&lt;h2 id=&quot;executive-summary&quot;&gt;Executive Summary&lt;/h2&gt;
-&lt;p&gt;I identified a model with ±$22902.22 predictive performance, on par with other web-based consumer pricing tools &lt;a href=&quot;https://realestate.usnews.com/real-estate/articles/7-online-tools-to-help-you-estimate-your-homes-value&quot;&gt;(Source)&lt;/a&gt;. This was based on 65 home features that can continue to be refined for implementation in an app environment. Since many of the features relate to fixed home characteristics, the actual UX flow will be largely automated due to availability of this data in municipal databases.&lt;/p&gt;
-
-&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
-&lt;p&gt;The Ames dataset is well known within the data-science community. By leveraging the predictive power of recursive model optimization processes we can identify trends across home features and geographic markets that are not immediately obvious even to seasoned professionals. Identifying the relative contribution these features make to overall home value will allow consumers and real estate professions work with greater confidence when listing properties as sellers and more quickly identify underpriced homes as buyers, resulting in higher profit margins or greater savings, resp. Additionally, by identifying home features that contribute more significantly to home value, both investors and home owners can better allocate resources for home restorations and other capital investments. This model can also serve as an additional validation tool for home appraisers or be offered as a consumer product in lieu of employing a professional appraiser.&lt;/p&gt;
-
-&lt;p&gt;The current appraisal timeline:
-&lt;img src=&quot;/assets/images/ames_housing_timeline.jpg&quot; alt=&quot;appraisal timeline&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;According to U.S. News &amp;amp; World Report the top 7 consumer-grade home pricing tools can show over ±$100,000 in variation in home valuation &lt;a href=&quot;https://realestate.usnews.com/real-estate/articles/7-online-tools-to-help-you-estimate-your-homes-value&quot;&gt;(Source)&lt;/a&gt;. Given the wide availability of property data maintained by county clerks offices and other municipal offices, the potential predictive power of regression-based CMA is stronger than ever.&lt;/p&gt;
-
-&lt;p&gt;This project will outline key findings as well as provide business insights to guide further investigation.&lt;/p&gt;
-
-&lt;h2 id=&quot;data-dictionary&quot;&gt;Data Dictionary&lt;/h2&gt;
-&lt;p&gt;Refer to http://jse.amstat.org/v19n3/decock/DataDocumentation.txt&lt;/p&gt;
-
-&lt;h2 id=&quot;findings&quot;&gt;Findings&lt;/h2&gt;
-&lt;p&gt;In this project I found that the LassoCV model delivered the lowest RMSE (22902.21) and r2 score (90.57), narrowing predictions to $22902.22. The next best model algorithm was RidgeCV, followed by ElasticNetCV, Linear Regression, and finally KNNeighbors.&lt;/p&gt;
-
-&lt;p&gt;Predicted vs. True values for the LassoCV production model:
-&lt;img src=&quot;/assets/images/ames_housing_model.jpg&quot; alt=&quot;production model&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The Features of most interest were:
-&lt;img src=&quot;/assets/images/ames_housing_features.jpg&quot; alt=&quot;feature importance&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Beta 0:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;180368.80&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Positive features&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;feature&lt;/th&gt;
-      &lt;th&gt;weight&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Gr Liv Area&lt;/td&gt;
-      &lt;td&gt;2.17e+04&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Overall Qual&lt;/td&gt;
-      &lt;td&gt;1.27e+04&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;BsmtFin SF&lt;/td&gt;
-      &lt;td&gt;7.61e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Kitchen Qual_Ex&lt;/td&gt;
-      &lt;td&gt;7.28e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Year Built&lt;/td&gt;
-      &lt;td&gt;6.87e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Total Bsmt SF&lt;/td&gt;
-      &lt;td&gt;6.38e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Garage Area&lt;/td&gt;
-      &lt;td&gt;5.76e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Bldg Type_1Fam&lt;/td&gt;
-      &lt;td&gt;5.30e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Bsmt Qual_Ex&lt;/td&gt;
-      &lt;td&gt;5.21e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Exter Qual_Ex&lt;/td&gt;
-      &lt;td&gt;4.80e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Neighborhood_NridgHt&lt;/td&gt;
-      &lt;td&gt;4.58e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Lot Area&lt;/td&gt;
-      &lt;td&gt;4.54e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Neighborhood_StoneBr&lt;/td&gt;
-      &lt;td&gt;4.30e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Overall Cond&lt;/td&gt;
-      &lt;td&gt;4.25e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Bsmt Exposure_Gd&lt;/td&gt;
-      &lt;td&gt;4.07e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Sale Type_New&lt;/td&gt;
-      &lt;td&gt;3.85e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Neighborhood_NoRidge&lt;/td&gt;
-      &lt;td&gt;3.65e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Mas Vnr Area&lt;/td&gt;
-      &lt;td&gt;3.15e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Functional_Typ&lt;/td&gt;
-      &lt;td&gt;2.52e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Foundation_PConc&lt;/td&gt;
-      &lt;td&gt;2.39e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Fireplaces&lt;/td&gt;
-      &lt;td&gt;2.34e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Exterior_Brk&lt;/td&gt;
-      &lt;td&gt;2.08e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Year Remod/Add&lt;/td&gt;
-      &lt;td&gt;2.04e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Neighborhood_Crawfor&lt;/td&gt;
-      &lt;td&gt;1.84e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Roof Matl_WdShngl&lt;/td&gt;
-      &lt;td&gt;1.56e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Neighborhood_Somerst&lt;/td&gt;
-      &lt;td&gt;1.31e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Neighborhood_GrnHill&lt;/td&gt;
-      &lt;td&gt;1.29e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Baths&lt;/td&gt;
-      &lt;td&gt;1.25e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;1st Flr SF&lt;/td&gt;
-      &lt;td&gt;1.21e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Exterior_Cmnt&lt;/td&gt;
-      &lt;td&gt;9.88e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Bsmt Fin_GLQ&lt;/td&gt;
-      &lt;td&gt;9.78e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Wood Deck SF&lt;/td&gt;
-      &lt;td&gt;7.05e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Garage Qual_Gd&lt;/td&gt;
-      &lt;td&gt;5.71e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Garage Qual_Ex&lt;/td&gt;
-      &lt;td&gt;4.89e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Garage Cars&lt;/td&gt;
-      &lt;td&gt;4.49e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Fireplace Qu_Gd&lt;/td&gt;
-      &lt;td&gt;4.24e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Bsmt Baths&lt;/td&gt;
-      &lt;td&gt;3.45e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Mas Vnr Type_Stone&lt;/td&gt;
-      &lt;td&gt;3.15e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Neighborhood_BrkSide&lt;/td&gt;
-      &lt;td&gt;2.57e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Land Contour_HLS&lt;/td&gt;
-      &lt;td&gt;2.55e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Garage Type_BuiltIn&lt;/td&gt;
-      &lt;td&gt;2.39e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Sale Type_Con&lt;/td&gt;
-      &lt;td&gt;1.95e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Heating QC_Ex&lt;/td&gt;
-      &lt;td&gt;1.68e+01&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Negative features&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;feature&lt;/th&gt;
-      &lt;th&gt;weight&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Mas Vnr Type_BrkCmn&lt;/td&gt;
-      &lt;td&gt;-7.31e+01&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Neighborhood_Edwards&lt;/td&gt;
-      &lt;td&gt;-1.30e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Garage Type_Basment&lt;/td&gt;
-      &lt;td&gt;-1.84e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Condition_RR&lt;/td&gt;
-      &lt;td&gt;-2.76e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Sale Type_ConLI&lt;/td&gt;
-      &lt;td&gt;-2.82e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Heating_OthW&lt;/td&gt;
-      &lt;td&gt;-2.83e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Bsmt Qual_TA&lt;/td&gt;
-      &lt;td&gt;-3.11e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Kitchen Qual_TA&lt;/td&gt;
-      &lt;td&gt;-3.12e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Bsmt Fin_LwQ&lt;/td&gt;
-      &lt;td&gt;-3.27e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Exterior_Plywood&lt;/td&gt;
-      &lt;td&gt;-4.79e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Functional_Maj1&lt;/td&gt;
-      &lt;td&gt;-5.74e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Roof Style_Mansard&lt;/td&gt;
-      &lt;td&gt;-7.78e+02&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Bsmt Exposure_No&lt;/td&gt;
-      &lt;td&gt;-1.07e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Sale Type_COD&lt;/td&gt;
-      &lt;td&gt;-1.13e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;MS Zoning_RM&lt;/td&gt;
-      &lt;td&gt;-1.28e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Heating QC_TA&lt;/td&gt;
-      &lt;td&gt;-1.51e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Condition_Street&lt;/td&gt;
-      &lt;td&gt;-1.59e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Exter Qual_TA&lt;/td&gt;
-      &lt;td&gt;-2.41e+03&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Misc Feature_Elev&lt;/td&gt;
-      &lt;td&gt;-1.19e+04&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Roof Matl_ClyTile&lt;/td&gt;
-      &lt;td&gt;-1.43e+04&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h2 id=&quot;business-recommendations&quot;&gt;Business Recommendations&lt;/h2&gt;
-&lt;p&gt;Since this model performs on par with existing consumer tools, I consider this a positive proof of concept. Next steps are continued model refinement as well as generalization to other home markets. Features that can be preloaded from municipal data can also be identified to develop a more streamlined UX environment and reduce the number of features that have to be manually assessed by the user.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
-&lt;p&gt;From my model comparisons I concluded that regularization methods such as Lasso and Ridge perform better than other modeling algorithms. This is likely due to many of the features having some level of colinearity that in other models would be outright excluded. For Lasso and Ridge they are still able to affect our predictions, however their impact is attenuated to avoid over-weighting. Since Lasso and Ridge both performed well, ElasticNet can probably be tuned to capture the best qualities of each model and increase predictive accuracy.&lt;/p&gt;
-
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/ames_housing&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sat, 01 Dec 2018 00:00:00 -0800</pubDate>
-        <link>https://chrissinatra.dev/2018/12/01/project-ames_housing/</link>
-        <guid isPermaLink="true">https://chrissinatra.dev/2018/12/01/project-ames_housing/</guid>
-        
-        <category>regression</category>
-        
-        <category>project</category>
-        
-        <category>random forest</category>
-        
-        <category>multinomial bayes</category>
-        
-        <category>KNN</category>
-        
-        <category>logistic regression</category>
-        
-        <category>prediction</category>
         
         
       </item>

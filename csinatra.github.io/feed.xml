@@ -5,8 +5,8 @@
     <description>A collection of Data Science projects by Chris Sinatra</description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 03 Apr 2019 15:00:57 -0700</pubDate>
-    <lastBuildDate>Wed, 03 Apr 2019 15:00:57 -0700</lastBuildDate>
+    <pubDate>Fri, 05 Apr 2019 10:46:34 -0700</pubDate>
+    <lastBuildDate>Fri, 05 Apr 2019 10:46:34 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -51,19 +51,71 @@ table, th, td {
 }
 &lt;/style&gt;
 
-&lt;p&gt;&lt;strong&gt;track_table:&lt;/strong&gt;
-| Feature        | SQL Type              | Data Type | Description                                                                                          |
-|—————-|———————–|———–|——————————————————————————————————|
-| track_id       | VARCHAR / PRIMARY KEY | string    | Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project. |
-| playlist_id    | VARCHAR               | string    | Unique playlist ID assigned by Spotify and used to group tracks by playlist.                         |
-| track_name     | VARCHAR               | string    | Name of the Track.                                                                                   |
-| artist_name    | VARCHAR               | string    | Name of the Artist.                                                                                  |
-| album_name     | VARCHAR               | string    | Name of the Album.                                                                                   |
-| playlist_name  | VARCHAR               | string    | Name of the Spotify playlist.                                                                        |
-| playlist_owner | VARCHAR               | string    | Name of the playlist creator (Spotify).                                                              |
-| lyrics         | JSON                  | string    | Lyrics queried from Genius (http://genius.com)                                                       |&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;track_table:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Feature&lt;/th&gt;
+      &lt;th&gt;SQL Type&lt;/th&gt;
+      &lt;th&gt;Data Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;track_id&lt;/td&gt;
+      &lt;td&gt;VARCHAR / PRIMARY KEY&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;playlist_id&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Unique playlist ID assigned by Spotify and used to group tracks by playlist.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;track_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Track.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;artist_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Artist.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;album_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Album.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;playlist_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Spotify playlist.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;playlist_owner&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the playlist creator (Spotify).&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lyrics&lt;/td&gt;
+      &lt;td&gt;JSON&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Lyrics queried from Genius (http://genius.com)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;p&gt;&lt;strong&gt;lyric_table:&lt;/strong&gt;
+s
 | Feature                | SQL Type              | Data Type | Description                                                                                          |
 |————————|———————–|———–|——————————————————————————————————|
 | track_id               | VARCHAR / PRIMARY KEY | string    | Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project. |
@@ -190,122 +242,208 @@ table, th, td {
 table, th, td {
   border: 1px solid black;
 }
+&lt;/style&gt;
 
-| Feature        | Data Type | Description                                                                                                           |
-|----------------|-----------|-----------------------------------------------------------------------------------------------------------------------|
-| id             | str       | Unique Tweet id returned by the Twitter API                                                                           |
-| text           | str       | Text from the Tweet                                                                                                   |
-| label_on-topic | bool      | Label based on relatedness to the disaster. Classes are ‘false’ for off-topic or ‘true’ for on-topic                  |
-| disaster_type  | str       | Disaster type. Classes are ‘flood’, ‘hurricane’, and ‘tornado’                                                        |
-| processed      | str       | Regex cleaned text mapping to lowercase, removing excess whitespace characters, removing links, and removing symbols. |
-| tokenized      | str       | List of words from the original Tweet split into single and 2-word tokens                                             |
-| lemmatized     | str       | List of tokens converted into their root lemmatized form
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Feature&lt;/th&gt;
+      &lt;th&gt;Data Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;id&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;Unique Tweet id returned by the Twitter API&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;text&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;Text from the Tweet&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;label_on-topic&lt;/td&gt;
+      &lt;td&gt;bool&lt;/td&gt;
+      &lt;td&gt;Label based on relatedness to the disaster. Classes are ‘false’ for off-topic or ‘true’ for on-topic&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;disaster_type&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;Disaster type. Classes are ‘flood’, ‘hurricane’, and ‘tornado’&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;processed&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;Regex cleaned text mapping to lowercase, removing excess whitespace characters, removing links, and removing symbols.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;tokenized&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;List of words from the original Tweet split into single and 2-word tokens&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lemmatized&lt;/td&gt;
+      &lt;td&gt;str&lt;/td&gt;
+      &lt;td&gt;List of tokens converted into their root lemmatized form&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-## Approach
+&lt;h2 id=&quot;approach&quot;&gt;Approach&lt;/h2&gt;
 
-**1. Data Collection**
+&lt;p&gt;&lt;strong&gt;1. Data Collection&lt;/strong&gt;&lt;/p&gt;
 
-**Train**: From an external source, we gathered a labeled dataset to explore if we could correctly classify a natural disaster based on the contents of a tweet. &lt;br&gt;
-    (Source: [CrisisLex Disaster](http://crisislex.org/data-collections.html#CrisisLexT6
-))
+&lt;p&gt;&lt;strong&gt;Train&lt;/strong&gt;: From an external source, we gathered a labeled dataset to explore if we could correctly classify a natural disaster based on the contents of a tweet. &lt;br /&gt;
+    (Source: &lt;a href=&quot;http://crisislex.org/data-collections.html#CrisisLexT6&quot;&gt;CrisisLex Disaster&lt;/a&gt;)&lt;/p&gt;
 
-**Test**: Using the Twitter standard tweet search API, we collected tweets using search terms relevant to current disasters and geo coordinates of current disasters. $Xnumber$ tweets were collected from January 6, 2019 - January 16, 2019. We extracted the text and bounding box coordinates.
+&lt;p&gt;&lt;strong&gt;Test&lt;/strong&gt;: Using the Twitter standard tweet search API, we collected tweets using search terms relevant to current disasters and geo coordinates of current disasters. $Xnumber$ tweets were collected from January 6, 2019 - January 16, 2019. We extracted the text and bounding box coordinates.&lt;/p&gt;
 
-**2. Exploratory Data Analysis and Cleaning**
+&lt;p&gt;&lt;strong&gt;2. Exploratory Data Analysis and Cleaning&lt;/strong&gt;&lt;/p&gt;
 
-For a better understanding of the data, we performed exploratory data analysis. With the text data, we exercised standard natural language processing techniques such as tokenizing and lemmatizing. Then we split the data into train and test dataset and performed TF-IDF vectorizing.
+&lt;p&gt;For a better understanding of the data, we performed exploratory data analysis. With the text data, we exercised standard natural language processing techniques such as tokenizing and lemmatizing. Then we split the data into train and test dataset and performed TF-IDF vectorizing.&lt;/p&gt;
 
-We want to use TF-IDF to determine which words are most discriminating between tweets. Words that occur frequently are penalized and rare words are given more influence in our model.
-- The n-gram range was set with a lower bound of 1 and an upper bound of 2 so that word sequences contain at least one word and up to two words.
-- Filter out commonly used words in English.
-- Ignore terms that occur in less than 25 documents of the corpus.
+&lt;p&gt;We want to use TF-IDF to determine which words are most discriminating between tweets. Words that occur frequently are penalized and rare words are given more influence in our model.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The n-gram range was set with a lower bound of 1 and an upper bound of 2 so that word sequences contain at least one word and up to two words.&lt;/li&gt;
+  &lt;li&gt;Filter out commonly used words in English.&lt;/li&gt;
+  &lt;li&gt;Ignore terms that occur in less than 25 documents of the corpus.&lt;/li&gt;
+&lt;/ul&gt;
 
-**3. Preprocessing and Modeling**
+&lt;p&gt;&lt;strong&gt;3. Preprocessing and Modeling&lt;/strong&gt;&lt;/p&gt;
 
-**Sandy Hurricane**
-- Baseline Model:
-    - Accuracy score: 61.33%
-    - If we classify all tweets as being on-topic, we will be predicting correctly 61.33% of the time.
-- Random Forest:
-    - Accuracy score: 92.49%
-    - The accuracy scores are greater than our baseline model of 61.33%.
-    - The model is suffering from high variance, with our training score being roughly 4.45% higher than our test score.
-- Logistic Regression:
-    - Accuracy score: 96.06%
-    - The accuracy scores are greater than our baseline model of 61.33% and our Random Forest of 92.49%.
-    - The model is still slightly overfitting to the train data because the variance explained from train data is 0.8% higher than the variance explained in the test data.
+&lt;p&gt;&lt;strong&gt;Sandy Hurricane&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Baseline Model:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 61.33%&lt;/li&gt;
+      &lt;li&gt;If we classify all tweets as being on-topic, we will be predicting correctly 61.33% of the time.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Random Forest:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 92.49%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 61.33%.&lt;/li&gt;
+      &lt;li&gt;The model is suffering from high variance, with our training score being roughly 4.45% higher than our test score.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Logistic Regression:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 96.06%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 61.33% and our Random Forest of 92.49%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 0.8% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-**Oklahoma Tornado**
-- Baseline Model:
-    - Accuracy score: 53.84%
-    - If we classify all tweets as being on-topic, we will be predicting correctly 53.84% of the time.
-- Random Forest:
-    - Accuracy score: 93.59%
-    - The accuracy scores are greater than our baseline model of 53.83%.
-    - The model is still slightly overfitting to the train data because the variance explained from train data is 4.15% higher than the variance explained in the test data.
-- Logistic Regression:
-    - Accuracy score: 97.28%
-    - The accuracy scores are greater than our baseline model of 53.83%.
-    - The model is still slightly overfitting to the train data because the variance explained from train data is 1% higher than the variance explained in the test data.
+&lt;p&gt;&lt;strong&gt;Oklahoma Tornado&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Baseline Model:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 53.84%&lt;/li&gt;
+      &lt;li&gt;If we classify all tweets as being on-topic, we will be predicting correctly 53.84% of the time.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Random Forest:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 93.59%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 4.15% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Logistic Regression:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 97.28%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 1% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-**Alberta Floods and Queensland Flood**
-- Baseline Model:
-    - Accuracy score: 52.85%
-    - If we classify all tweets as being on-topic, we will be predicting correctly 53.84% of the time.
-- Random Forest:
-    - Accuracy score: 95.95%
-    - The accuracy scores are greater than our baseline model of 53.83%.
-    - The model is still slightly overfitting to the train data because the variance explained from train data is 2.61% higher than the variance explained in the test data.
-- Logistic Regression:
-    - Accuracy score: 97.28%
-    - The accuracy scores are greater than our baseline model of 53.83%.
-    - The model is still slightly overfitting to the train data because the variance explained from train data is 1% higher than the variance explained in the test data.
+&lt;p&gt;&lt;strong&gt;Alberta Floods and Queensland Flood&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Baseline Model:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 52.85%&lt;/li&gt;
+      &lt;li&gt;If we classify all tweets as being on-topic, we will be predicting correctly 53.84% of the time.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Random Forest:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 95.95%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 2.61% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Logistic Regression:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 97.28%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 1% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-**All Disasters**
-- Baseline Model:
-    - Accuracy score: 53.84%
-    - If we classify all tweets as being on-topic, we will be predicting correctly 53.84% of the time.
-- Random Forest:
-    - Accuracy score: 94.42%
-    - The accuracy scores are greater than our baseline model of 53.83%.
-    - The model is still slightly overfitting to the train data because the variance explained from train data is 4.41% higher than the variance explained in the test data.
-- Logistic Regression:
-    - Accuracy score: 98.03%
-    - - The accuracy scores are greater than our baseline model of 53.84%.
-    - The model is still slightly overfitting to the train data because the variance explained from train data is 0.31% higher than the variance explained in the test data.
+&lt;p&gt;&lt;strong&gt;All Disasters&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Baseline Model:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 53.84%&lt;/li&gt;
+      &lt;li&gt;If we classify all tweets as being on-topic, we will be predicting correctly 53.84% of the time.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Random Forest:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 94.42%&lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.83%.&lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 4.41% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Logistic Regression:
+    &lt;ul&gt;
+      &lt;li&gt;Accuracy score: 98.03%&lt;/li&gt;
+      &lt;li&gt;
+        &lt;ul&gt;
+          &lt;li&gt;The accuracy scores are greater than our baseline model of 53.84%.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 0.31% higher than the variance explained in the test data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-**4. Mapping Simulation**
+&lt;p&gt;&lt;strong&gt;4. Mapping Simulation&lt;/strong&gt;&lt;/p&gt;
 
-Geo-coordinates are randomly generated for tweets. These tweets are then mapped, with red representing `on-topic` and blue representing `off-topic` to better visualize disaster location.
+&lt;p&gt;Geo-coordinates are randomly generated for tweets. These tweets are then mapped, with red representing &lt;code class=&quot;highlighter-rouge&quot;&gt;on-topic&lt;/code&gt; and blue representing &lt;code class=&quot;highlighter-rouge&quot;&gt;off-topic&lt;/code&gt; to better visualize disaster location.&lt;/p&gt;
 
-**5. Proof of Concept**
+&lt;p&gt;&lt;strong&gt;5. Proof of Concept&lt;/strong&gt;&lt;/p&gt;
 
-We query tweets in Malibu, CA and Riverside, CA with flood-related search terms. We cleaned, preprocessed and modeled these raw tweets using the pipeline outlined in previous notebooks.
+&lt;p&gt;We query tweets in Malibu, CA and Riverside, CA with flood-related search terms. We cleaned, preprocessed and modeled these raw tweets using the pipeline outlined in previous notebooks.&lt;/p&gt;
 
-## Model Comparison
+&lt;h2 id=&quot;model-comparison&quot;&gt;Model Comparison&lt;/h2&gt;
 
-**Advantages with Random Forest**: The model is more sophisticated and may perform better on less obvious data which can may mean less data preprocessing.
+&lt;p&gt;&lt;strong&gt;Advantages with Random Forest&lt;/strong&gt;: The model is more sophisticated and may perform better on less obvious data which can may mean less data preprocessing.&lt;/p&gt;
 
-**Advantages with Logisitic Regression**:
-We can easily determine how likely a tweet will be classified as `on-topic` by taking the exponential of the log odds of words. Even though Random Forest informs us about feature importance, we cannot quickly determine the information gained to classify a tweet as `on-topic`.
+&lt;p&gt;&lt;strong&gt;Advantages with Logisitic Regression&lt;/strong&gt;:
+We can easily determine how likely a tweet will be classified as &lt;code class=&quot;highlighter-rouge&quot;&gt;on-topic&lt;/code&gt; by taking the exponential of the log odds of words. Even though Random Forest informs us about feature importance, we cannot quickly determine the information gained to classify a tweet as &lt;code class=&quot;highlighter-rouge&quot;&gt;on-topic&lt;/code&gt;.&lt;/p&gt;
 
-## Conclusions and Recommendations
-Given a training set, we were able to classify disasters with high confidence based on the context of an individual tweet. This is important as given an unseen set of tweets, we are able to identify if a disaster is occurring. We randomly assigned geo coordinates to the training set to simulate a real-life scenario in which first responders would benefit from knowing the specific locations on a map to contain the disaster at hand.
+&lt;h2 id=&quot;conclusions-and-recommendations&quot;&gt;Conclusions and Recommendations&lt;/h2&gt;
+&lt;p&gt;Given a training set, we were able to classify disasters with high confidence based on the context of an individual tweet. This is important as given an unseen set of tweets, we are able to identify if a disaster is occurring. We randomly assigned geo coordinates to the training set to simulate a real-life scenario in which first responders would benefit from knowing the specific locations on a map to contain the disaster at hand.&lt;/p&gt;
 
-We simulated such process when we gathered real-life flood related tweets. Applying the previously built pipeline for our training data, we classified with high accuracy that a real tweet can be classified into its respective disaster category.
+&lt;p&gt;We simulated such process when we gathered real-life flood related tweets. Applying the previously built pipeline for our training data, we classified with high accuracy that a real tweet can be classified into its respective disaster category.&lt;/p&gt;
 
-## Next Steps
+&lt;h2 id=&quot;next-steps&quot;&gt;Next Steps&lt;/h2&gt;
 
-There were three areas that we wanted to improve on:
+&lt;p&gt;There were three areas that we wanted to improve on:&lt;/p&gt;
 
-**Lack of recent real world tweet data**: We were unable to find sufficient recent real world disaster tweets from which to test our trained models on. The raw data we were able to collect were not labeled as relevant or not which limited the models we wanted to use.
+&lt;p&gt;&lt;strong&gt;Lack of recent real world tweet data&lt;/strong&gt;: We were unable to find sufficient recent real world disaster tweets from which to test our trained models on. The raw data we were able to collect were not labeled as relevant or not which limited the models we wanted to use.&lt;/p&gt;
 
-**Lack of real geo coordinates**: We were unable to gather real geo coordinates. Instead we had generated hypothetical geo coordinates of different tweets to mimic a natural disaster. Had we had access to the actual geo-coordinates, we could have accurately simulated a disaster through our plot.
+&lt;p&gt;&lt;strong&gt;Lack of real geo coordinates&lt;/strong&gt;: We were unable to gather real geo coordinates. Instead we had generated hypothetical geo coordinates of different tweets to mimic a natural disaster. Had we had access to the actual geo-coordinates, we could have accurately simulated a disaster through our plot.&lt;/p&gt;
 
-**Lack of compute**: With more computing power, we could have scaled our analysis to gather more tweets and run our models handle more tweets and provide a more confident model.
+&lt;p&gt;&lt;strong&gt;Lack of compute&lt;/strong&gt;: With more computing power, we could have scaled our analysis to gather more tweets and run our models handle more tweets and provide a more confident model.&lt;/p&gt;
 
 &lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/nlt_twitter&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;
-&lt;/style&gt;
 </description>
         <pubDate>Tue, 01 Jan 2019 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2019/01/01/project-nlt/</link>

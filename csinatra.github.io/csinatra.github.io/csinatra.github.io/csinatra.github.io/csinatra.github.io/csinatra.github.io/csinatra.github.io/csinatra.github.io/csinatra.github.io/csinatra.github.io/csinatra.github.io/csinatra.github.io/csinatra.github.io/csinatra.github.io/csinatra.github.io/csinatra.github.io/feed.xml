@@ -6,8 +6,8 @@
 </description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 14 Mar 2019 16:37:56 -0700</pubDate>
-    <lastBuildDate>Thu, 14 Mar 2019 16:37:56 -0700</lastBuildDate>
+    <pubDate>Fri, 15 Mar 2019 15:59:49 -0700</pubDate>
+    <lastBuildDate>Fri, 15 Mar 2019 15:59:49 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -246,7 +246,7 @@
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;a name=&quot;section8&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;It is clear this model has great potential for language processing and text generation. For a word-level model to produce these results on a relatively small dataset is frankly quite remarkable. As an exploratory project seeking to demonstrate the potential of LSTM architectures for generating human-readable text, this is a tremendous starting point. Consumer and enterprise-level use-cases for this functionality are broad and there’s no doubt that machine-generated language processing will only become more prevalent in the coming years.&lt;/p&gt;
 
-&lt;p&gt;&lt;center&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/crooner&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/crooner&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 01 Feb 2019 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2019/02/01/project-crooner/</link>
@@ -273,7 +273,9 @@
     
       <item>
         <title>Political Subgroup Identification on Reddit</title>
-        <description>&lt;p&gt;I used Natural Language Processing techniques to identify linguistic differences between closely related but ideologically distinct political subgroups. In this case, the groups of interest are Conservatives and Libertarians. Creating accurate classification models has application in assessing journalistic sources as well as optimizing communications to create a deeper connection with the target audience.&lt;/p&gt;
+        <description>&lt;p&gt;I used Natural Language Processing techniques to identify linguistic differences between closely related but ideologically distinct political subgroups.&lt;/p&gt;
+
+&lt;p&gt;In this case, the groups of interest are Conservatives and Libertarians. Creating accurate classification models has application in assessing journalistic sources as well as optimizing communications to create a deeper connection with the target audience.&lt;/p&gt;
 
 &lt;p&gt;My model classified my data with 72.4% accuracy, showing a positive proof of concept. The best model was multinomial naive bayes, a relatively simple model that suggests there is room for significant improvement as I move toward more sophisticated models. The baseline accuracy for my dataset was 53.8%.&lt;/p&gt;
 
@@ -326,7 +328,7 @@
 &lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
 &lt;p&gt;This preliminary investigation showed strong positive results and set the groundwork for further investigations. Continuing with a wider group of model algorithms as well as allocating more compute to tuning our models is likely to produce a generalizable model that predicts with a much higher accuracy. For initial studies, the Multinomial Naive Bayes may serve as the minimum viable product to put this classification system into production.&lt;/p&gt;
 
-&lt;p&gt;&lt;center&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/reddit_NLP&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/reddit_NLP&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Jan 2019 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2019/01/01/project-reddit_NLP/</link>
@@ -351,7 +353,7 @@
     
       <item>
         <title>Ames Housing Price Prediction</title>
-        <description>&lt;p&gt;I developed and optimized a production model based on the canonical Ames, IA dataset that can be used as a proof of concept model for a consumer-grade appraisal tool. I built a model with ±$22902.22 predictive performance, on par with other web-based consumer pricing tools.&lt;/p&gt;
+        <description>&lt;p&gt;I developed and optimized a production model based on the canonical Ames with ±$22902.22 predictive performance, on par with current consumer-grade pricing tools.&lt;/p&gt;
 
 &lt;h2 id=&quot;problem-statement&quot;&gt;Problem Statement&lt;/h2&gt;
 &lt;p&gt;The goal of this project is to identify and optimize a production model based on the Ames, IA dataset that can be used as a proof of concept model for a consumer-grade appraisal tool. The input will be numeric and non-numeric home feature data that will be used to return an accurate sale price prediction for the given home. Model performance will be judged by RMSE and $r^2 scoring on a test dataset after fitting an algorithm with training data. After refining this model, suggestions for generalization, implementation, as well as enterprise/commercial grade application will be reviewed.&lt;/p&gt;
@@ -670,7 +672,7 @@
 &lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
 &lt;p&gt;From my model comparisons I concluded that regularization methods such as Lasso and Ridge perform better than other modeling algorithms. This is likely due to many of the features having some level of colinearity that in other models would be outright excluded. For Lasso and Ridge they are still able to affect our predictions, however their impact is attenuated to avoid over-weighting. Since Lasso and Ridge both performed well, ElasticNet can probably be tuned to capture the best qualities of each model and increase predictive accuracy.&lt;/p&gt;
 
-&lt;p&gt;&lt;center&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/ames_housing&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/ames_housing&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 01 Dec 2018 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2018/12/01/project-ames_housing/</link>

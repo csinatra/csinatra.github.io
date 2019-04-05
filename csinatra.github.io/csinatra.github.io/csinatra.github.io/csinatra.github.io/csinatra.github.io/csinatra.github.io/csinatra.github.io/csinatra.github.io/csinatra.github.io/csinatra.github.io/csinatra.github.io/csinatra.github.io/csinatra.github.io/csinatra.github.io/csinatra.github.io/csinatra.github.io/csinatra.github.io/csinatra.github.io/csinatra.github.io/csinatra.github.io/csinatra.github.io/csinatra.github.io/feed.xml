@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Portfolio</title>
+    <title>Chris Sinatra</title>
     <description>A collection of Data Science projects by Chris Sinatra
 </description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 01 Mar 2019 19:03:00 -0800</pubDate>
-    <lastBuildDate>Fri, 01 Mar 2019 19:03:00 -0800</lastBuildDate>
+    <pubDate>Thu, 07 Mar 2019 13:43:22 -0800</pubDate>
+    <lastBuildDate>Thu, 07 Mar 2019 13:43:22 -0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -18,7 +18,233 @@
 
 &lt;p&gt;The problem of de novo text generation has direct application in fields such as social media content generation, direct response marketing, predictive text generation, or text-based customer service correspondence. This may also serve as a foundational underpinning for complete song or voice generation models which may be used across a variety of Enterprise applications.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/placeholder-20.jpg&quot; alt=&quot;Placeholder&quot; /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;problem-statement&quot;&gt;Problem Statement&lt;a name=&quot;section1&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This project aims to build a word-level love-song lyric generator trained on a real-world dataset made up of existing tracks and returning entirely new song lyrics based on a user generated seed text.&lt;/p&gt;
+
+&lt;p&gt;The problem of de novo text generation has direct application in fields such as social media content generation, direct response marketing, predictive text generation, or text-based customer service correspondence. This may also serve as a foundational underpinning for complete song or voice generation models which may be used across a variety of Enterprise applications.&lt;/p&gt;
+
+&lt;h2 id=&quot;executive-summary&quot;&gt;Executive Summary&lt;a name=&quot;section2&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Exploring word-level models based on an LSTM neural network architecture, my model was able to achieve 86.9% training accuracy and generate convincing lyrics that preserve basic song structure.&lt;/p&gt;
+
+&lt;p&gt;Here is an example song generated with the seed ‘eyes are for lovers’:
+&lt;img src=&quot;/assets/images/m1_eyes.png&quot; alt=&quot;eyes are for lovers&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The dataset was collected by querying the Spotify API &lt;a href=&quot;https://developer.spotify.com/documentation/web-api/&quot;&gt;(source)&lt;/a&gt; for Spotify Curated playlist track lists from the Romance genre and then scraping the Genius lyric database &lt;a href=&quot;https://genius.com/developers&quot;&gt;(source)&lt;/a&gt; to build a corpus of 1781 tracks and 12334 unique words.&lt;/p&gt;
+
+&lt;p&gt;After cleaning the data, training and optimizing a LSTM model and generating sample lyrics, the model was deployed in a console application as well as proof of concept Flask app.&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;a name=&quot;section3&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Predictive text generation models have been deployed by companies such as Google with wide adoption. Current production models are commonly built upon neural network architectures such as Convolutional Neural Nets (CNNs) or more recently Recurrent Neural Networks (RNNs) using character-level predictions.&lt;/p&gt;
+
+&lt;p&gt;While RNNs have been shown to produce strong results for more shallow networks and shorter texts, their performance tends to drop off with deeper architectures. This is due to a property dubbed the vanishing gradient problem, which describes an issue with downstream layers losing the ability to tune the weights of earlier layers. To address this issue, Long Short Term Memory (LSTM) networks allow samples to pass directly through to downstream layers, thereby preserving a direct path for tuning via forward and back-propagation. &lt;a href=&quot;http://colah.github.io/posts/2015-08-Understanding-LSTMs/&quot;&gt;(source)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/rnn_lstm.jpg&quot; alt=&quot;rnn vs lstm&quot; /&gt; &lt;em&gt;An unrolled RNN (top) vs LSTM (bottom) &lt;a href=&quot;https://www.oreilly.com/ideas/introduction-to-lstms-with-tensorflow&quot;&gt;(source)&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;A single LSTM cell has 3 states: a forget gate, a memory gate, and a sigmoid output layer. The first layer determines what information is kept from previous states, the next layer determines what new information will be added to the cell, and the final layer determines what information will be passed to the next LSTM cell. In this way, LSTM cells are able to avoid the problem of the vanishing gradient.&lt;/p&gt;
+
+&lt;p&gt;Leveraging the deep learning libraries of Keras running on a Tensorflow backend, a dataset of 1781 songs was split into 567142 training sequences and passed through the model. The songs were collected from the Romance category of Spotify Curated playlists. Each playlist is between 15-100 tracks and is professionally selected by Spotify Staff. Lyrics were scraped from Genius, one of the largest lyric databases populated by moderated user annotated lyrics. Once collected, the data was pushed to a SQL database for possible use as a backend server.&lt;/p&gt;
+
+&lt;p&gt;Song lyrics were cleaned and split into individual words for each track before processing and being fed into the model as tokenized word-level sequence sets. Predictions based on these input sets were validated against the ground truth next word in the track and the models were scored based on accuracy.&lt;/p&gt;
+
+&lt;h2 id=&quot;data-dictionary&quot;&gt;Data Dictionary&lt;a name=&quot;section4&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;SQL Tables:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;track_table:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Feature&lt;/th&gt;
+      &lt;th&gt;SQL Type&lt;/th&gt;
+      &lt;th&gt;Data Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;track_id&lt;/td&gt;
+      &lt;td&gt;VARCHAR / PRIMARY KEY&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;playlist_id&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Unique playlist ID assigned by Spotify and used to group tracks by playlist.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;track_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Track.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;artist_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Artist.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;album_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Album.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;playlist_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Spotify playlist.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;playlist_owner&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the playlist creator (Spotify).&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lyrics&lt;/td&gt;
+      &lt;td&gt;JSON&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Lyrics queried from Genius (http://genius.com)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;lyric_table:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Feature&lt;/th&gt;
+      &lt;th&gt;SQL Type&lt;/th&gt;
+      &lt;th&gt;Data Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;track_id&lt;/td&gt;
+      &lt;td&gt;VARCHAR / PRIMARY KEY&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;rep_ratio&lt;/td&gt;
+      &lt;td&gt;FLOAT&lt;/td&gt;
+      &lt;td&gt;float&lt;/td&gt;
+      &lt;td&gt;Ratio of unique words to total words in the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;total_words_track&lt;/td&gt;
+      &lt;td&gt;INT&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Word count for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;unique_words_track&lt;/td&gt;
+      &lt;td&gt;INT&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Unique word count for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;mean_len_words_track&lt;/td&gt;
+      &lt;td&gt;FLOAT&lt;/td&gt;
+      &lt;td&gt;float&lt;/td&gt;
+      &lt;td&gt;Mean word length for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;total_lines_track&lt;/td&gt;
+      &lt;td&gt;INT&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Line count for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;unique_lines_track&lt;/td&gt;
+      &lt;td&gt;INT&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Unique line count for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;mean_words_line&lt;/td&gt;
+      &lt;td&gt;FLOAT&lt;/td&gt;
+      &lt;td&gt;float&lt;/td&gt;
+      &lt;td&gt;Mean word count per line in the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;mean_unique_words_line&lt;/td&gt;
+      &lt;td&gt;FLOAT&lt;/td&gt;
+      &lt;td&gt;float&lt;/td&gt;
+      &lt;td&gt;Mean unique word count per line in the track&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;findings&quot;&gt;Findings&lt;a name=&quot;section5&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Creating a python-based word-level text generator, I decided to implement a sliding window sequence to feed data into the model. This means that an input sequence of &lt;em&gt;m&lt;/em&gt; words will be used to generate an output sequence of &lt;em&gt;n&lt;/em&gt; words. Sequencing the data in this way has the benefit of providing a ground truth feature that can be used to score model accuracy during training.&lt;/p&gt;
+
+&lt;p&gt;Based on song structure findings during EDA, I decided on an input sequence of four words, an output sequence of one word, and a 250 word song length. This corresponds to an average of 9.1 words/line and 282.6 words/track seen in the dataset. I also chose to keep ‘\n’ characters in an effort to preserve song structure.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/words_line.png&quot; alt=&quot;mean words per line&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/words_track.png&quot; alt=&quot;words per track&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Based on track length, I decided to build my model with an embedding layer followed by a first LSTM layer of 300 nodes, corresponding to roughly 1 node per word in the track. This feeds into a second LSTM layer with 150 nodes, followed by a Dense layer with 100 nodes and finally an output layer with the same shape as the training corpus.&lt;/p&gt;
+
+&lt;p&gt;The best results were produced when using a model trained over 300 epochs with batches of 5000 input sequences and untrained word word vectors with 3000 dimensions. The optimization function was the ADAM optimizer and the loss function was categorical cross-entropy.&lt;/p&gt;
+
+&lt;p&gt;The model architecture was as follows:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Keras Embedding (3000)&lt;/li&gt;
+  &lt;li&gt;LSTM (300, return_sequences=True)&lt;/li&gt;
+  &lt;li&gt;LSTM (150)&lt;/li&gt;
+  &lt;li&gt;Dense (100, ReLu)&lt;/li&gt;
+  &lt;li&gt;Dense (vocab_size, softmax)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The Keras embedding layer is randomly initialized and fit alongside the model during training. Since I started with a vocabulary of 12334 unique words it seemed reasonable to begin with reducing the input dimensionality down to a 3000 feature dense representation. I also explored the use of pre-trained word vectors from the GloVe Common Crawl 42B dataset for comparison &lt;a href=&quot;https://nlp.stanford.edu/projects/glove/&quot;&gt;(source)&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Lyrics produced from a model fit with pre-trained word vectors from the GloVe 42B dataset were more likely to repeat or fall into loops, requiring a larger variance coefficient during lyric generation to avoid repetition. This may indicated a need for more training epochs or a deeper overall model architecture. Since the embeddings were not a parameter being fit by the model, it is also possible that allowing the model to update embedding weights would also lead to better results. Line structure was also markedly less robust, often being choppy and 4-6 words compared to the longer lines of other models.&lt;/p&gt;
+
+&lt;p&gt;To inject a tunable amount of variance in the model predictions, predicted probabilities for the next word were scaled and then randomly sampled from a distribution. This technique, adopted from the Keras LSTM example framework, prevents predictions from falling into a loop of high likelihood word patterns or into lyrics that the model was initially trained on &lt;a href=&quot;https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py&quot;&gt;(source)&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This framework produced 250 word lyric sets that showed minimal repetition, maintained human readability, and preserved an output structure that could pass as real-world lyrics.&lt;/p&gt;
+
+&lt;p&gt;Reviewing song structure as a repetition grid, here is the output for the model generated track from above:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/eyes_grid.png&quot; alt=&quot;eyes_grid&quot; /&gt; &lt;em&gt;Model-generated song repetition grid without pre-trained embeddings&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/always_grid.png&quot; alt=&quot;eyes_grid&quot; /&gt; &lt;em&gt;Model-generated song repetition grid with pre-trained embeddings&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/always_be.png&quot; alt=&quot;eyes_grid&quot; /&gt; &lt;em&gt;Lyrics generated from the seed ‘always be there love’&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In this grid, the vertical and horizontal axis represent each word in the track. If a word is repeated, the cell is filled, otherwise it is left white. This can be compared to a real track below. Note that the song below has about 30% higher word repetition (~ 0.64, average for the dataset compared to 0.39 above). It is possible that as the model becomes better optimized these structural components will become more well-defined.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/teddy_grid.png&quot; alt=&quot;real_grid&quot; /&gt;&lt;em&gt;Real song repetition grid&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/teddy.png&quot; alt=&quot;teddy&quot; /&gt;&lt;em&gt;Lyrics for When Somebody Loves You Back, Teddy Pendergrass &lt;a href=&quot;https://genius.com/Teddy-pendergrass-when-somebody-loves-you-back-lyrics&quot;&gt;(source)&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;business-recommendations&quot;&gt;Business Recommendations&lt;a name=&quot;section6&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Based on my findings, it’s clear that LSTM models provide a solid architecture for language processing and text generation. This model is robust enough to produce entertaining results that can be deployed in a consumer level product with minimal additional front-end development.&lt;/p&gt;
+
+&lt;p&gt;This work provides a foundation for further exploration of word- and document-level language processing frameworks which can be applied to use-cases such as translation, marketing / copywriting, document summarization, image captioning, and other areas where automated speech and text may be beneficial.&lt;/p&gt;
+
+&lt;p&gt;In the context of personalized, targeted marketing where brand voice and authenticity are paramount, a model such as this one may be able to provide basic copy that requires minimal human-in-the-loop feedback to become a market-ready document that adheres to pre-established and longstanding brand guidelines.&lt;/p&gt;
+
+&lt;h2 id=&quot;next-steps&quot;&gt;Next steps&lt;a name=&quot;section7&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This model would benefit from a more exhaustive optimization of both architecture and hyperparameter tuning. To accomplish this will require scaling up compute.&lt;/p&gt;
+
+&lt;p&gt;One tool that I would be interested in exploring is the Adanet adaptive architecture package that can dynamically test the addition of layers and nodes to create better predictions. I would have also liked to have explored pre-trained word vectors with longer training runs as I’m confident that a better semantic understanding of the data would result in more humanistic predictions.&lt;/p&gt;
+
+&lt;p&gt;I would also like to build out the model with a more consumer-facing interface alongside the lyric repetition grid and interactive versions of other song structure plots produced during EDA.&lt;/p&gt;
+
+&lt;p&gt;A natural extension of this project would be training on a larger dataset that is grouped by genre to see how well the model can mimic not only syntax, but also sentiment according to well conserved song structures.&lt;/p&gt;
+
+&lt;p&gt;Another interesting idea would be training the model on company websites, press releases, and other public-facing documents to see how well the model can adopt brand voice.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;a name=&quot;section8&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;It is clear this model has great potential for language processing and text generation. For a word-level model to produce these results on a relatively small dataset is frankly quite remarkable. As an exploratory project seeking to demonstrate the potential of LSTM architectures for generating human-readable text, this is a tremendous starting point. Consumer and enterprise-level use-cases for this functionality are broad and there’s no doubt that machine-generated language processing will only become more prevalent in the coming years.&lt;/p&gt;
 </description>
         <pubDate>Fri, 01 Feb 2019 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2019/02/01/project-crooner/</link>
@@ -49,7 +275,45 @@
 
 &lt;p&gt;My model classified my data with 72.4% accuracy, showing a positive proof of concept. The best model was multinomial naive bayes, a relatively simple model that suggests there is room for significant improvement as I move toward more sophisticated models. The baseline accuracy for my dataset was 53.8%.&lt;/p&gt;
 
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/5S6U_krabrk&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;h2 id=&quot;problem-statement&quot;&gt;Problem Statement&lt;/h2&gt;
+&lt;p&gt;The purpose of this project is to use Natural Language Processing techniques to identify linguistic differences between closely related but ideologically distinct political subgroups. In this case, the groups of interest are Conservatives and Libertarians. Creating accurate classification models has application in assessing journalistic sources as well as optimizing communications to create a deeper connection with the target audience.&lt;/p&gt;
+
+&lt;h2 id=&quot;executive-summary&quot;&gt;Executive Summary&lt;/h2&gt;
+&lt;p&gt;My model classified my data with 72.4% accuracy, showing a positive proof of concept. The best model was multinomial naive bayes, a relatively simple model that suggests there is room for significant improvement as I move toward more sophisticated models. The baseline accuracy was 53.8%&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+&lt;p&gt;As access to information becomes more distributed across web sources the ability to verify journalistic integrity becomes a pressing concern. This is made clear by ongoing issues surrounding social media platforms’ promotion of ‘fake news’ designed to influence political outcomes as well as the broader public conversation around bias in media.&lt;/p&gt;
+
+&lt;p&gt;This project aims to identify semantic and syntactical markers associated with two similar but distinct political subgroups: Conservatives and Libertarians. Understanding the ideological underpinnings that define communication dynamics within groups can be applied by modeling baseline tone for a given source and alerting audiences to significantly divergent texts. It may also be used for identifying bots or other inauthentic sources which may attempt to influence group sentiment.&lt;/p&gt;
+
+&lt;p&gt;Outside of propaganda detection, accurate modeling may also be used for scoring articles or press releases for relevance among the target audience. By scoring words that hold weight within a group the communication may be optimized for relatability, impact, scope, and demographics.&lt;/p&gt;
+
+&lt;p&gt;A text corpus will be built by querying Reddit and compiling comments from the Conservative and Libertarian subreddits that can be used for Supervised Learning using various classification models. The Pushshift API will be used to collect 100,000 samples from each subreddit and the data will be cleaned using Regex and word vectorization prior to Natural Language Processing (NLP). The clean data will be divided into training and validation sets before being fit by a given model before predicting classifications using the validation dataset. Models will include CART methods, Support Vector Machines (SVM), K-Nearest Neighbors / Latent Semantic Analysis (KNN / LSA), and others before determining a final production model.&lt;/p&gt;
+
+&lt;h2 id=&quot;findings&quot;&gt;Findings&lt;/h2&gt;
+&lt;p&gt;During EDA I found that Libertarians generally had higher word and character counts for a given document compared with Conservatives. While Count Vectorization produced similar top word lists, Tfidf Vectorization was able to identify words that had a stronger association with each groups individual ideology. As such, Tfidf data was used for modeling.&lt;/p&gt;
+
+&lt;p&gt;My baseline prediction was 53.8% accuracy by predicting the positive class for all samples.&lt;/p&gt;
+
+&lt;p&gt;The Random Forest model showed strong performance with the training data however it performed poorly on the validation data, showing signs of overfitting. The predictive accuracy on untrained data was only 70.5%, less than the naive bayes model. It’s likely this is was a result of using a small number of trees for fitting, and considering a larger number for each split would produce a more generalizable result.&lt;/p&gt;
+
+&lt;p&gt;The Multinomial Naive Bayes model performed consistently between the training and validation datasets, predicting classes with 72.4% accuracy. Considering the simplicity fo the model and that the model was fit to Term Frequency / Inverse Document Frequency vectorized data this is a strong increase over the baseline model.&lt;/p&gt;
+
+&lt;h2 id=&quot;recommendations&quot;&gt;Recommendations&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Fit additional models&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Use GridSearch to optimize over a larger space of hyperparameters&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;More aggressive data cleaning to streamline computations and reduce compute time.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;This preliminary investigation showed strong positive results and set the groundwork for further investigations. Continuing with a wider group of model algorithms as well as allocating more compute to tuning our models is likely to produce a generalizable model that predicts with a much higher accuracy. For initial studies, the Multinomial Naive Bayes may serve as the minimum viable product to put this classification system into production.&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Jan 2019 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2019/01/01/project-reddit_NLP/</link>
@@ -76,9 +340,315 @@
         <title>Ames Housing</title>
         <description>&lt;p&gt;I developed and optimized a production model based on the canonical Ames, IA dataset that can be used as a proof of concept model for a consumer-grade appraisal tool. I built a model with ±$22902.22 predictive performance, on par with other web-based consumer pricing tools.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/placeholder-26.jpg&quot; alt=&quot;Placeholder&quot; /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;problem-statement&quot;&gt;Problem Statement&lt;/h2&gt;
 
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/5S6U_krabrk&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;The goal of this project is to identify and optimize a production model based on the Ames, IA dataset that can be used as a proof of concept model for a consumer-grade appraisal tool. The input will be numeric and non-numeric home feature data that will be used to return an accurate sale price prediction for the given home. Model performance will be judged by RMSE and $r^2 scoring on a test dataset after fitting an algorithm with training data. After refining this model, suggestions for generalization, implementation, as well as enterprise/commercial grade application will be reviewed.&lt;/p&gt;
+
+&lt;h2 id=&quot;executive-summary&quot;&gt;Executive Summary&lt;/h2&gt;
+&lt;p&gt;I identified a model with ±$22902.22 predictive performance, on par with other web-based consumer pricing tools &lt;a href=&quot;https://realestate.usnews.com/real-estate/articles/7-online-tools-to-help-you-estimate-your-homes-value&quot;&gt;(Source)&lt;/a&gt;. This was based on 65 home features that can continue to be refined for implementation in an app environment. Since many of the features relate to fixed home characteristics, the actual UX flow will be largely automated due to availability of this data in municipal databases.&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;The Ames dataset is well known within the data-science community. By leveraging the predictive power of recursive model optimization processes we can identify trends across home features and geographic markets that are not immediately obvious even to seasoned professionals. Identifying the relative contribution these features make to overall home value will allow consumers and real estate professions work with greater confidence when listing properties as sellers and more quickly identify underpriced homes as buyers, resulting in higher profit margins or greater savings, resp. Additionally, by identifying home features that contribute more significantly to home value, both investors and home owners can better allocate resources for home restorations and other capital investments. This model can also serve as an additional validation tool for home appraisers or be offered as a consumer product in lieu of employing a professional appraiser.&lt;/p&gt;
+
+&lt;p&gt;According to U.S. News &amp;amp; World Report the top 7 consumer-grade home pricing tools can show over ±$100,000 in variation in home valuation &lt;a href=&quot;https://realestate.usnews.com/real-estate/articles/7-online-tools-to-help-you-estimate-your-homes-value&quot;&gt;(Source)&lt;/a&gt;. Given the wide availability of property data maintained by county clerks offices and other municipal offices, the potential predictive power of regression-based CMA is stronger than ever.&lt;/p&gt;
+
+&lt;p&gt;This project will outline key findings as well as provide business insights to guide further investigation.&lt;/p&gt;
+
+&lt;h2 id=&quot;data-dictionary&quot;&gt;Data Dictionary&lt;/h2&gt;
+&lt;p&gt;Refer to http://jse.amstat.org/v19n3/decock/DataDocumentation.txt&lt;/p&gt;
+
+&lt;h2 id=&quot;findings&quot;&gt;Findings&lt;/h2&gt;
+&lt;p&gt;In this project I found that the LassoCV model delivered the lowest RMSE (22902.21) and r2 score (90.57), narrowing predictions to $22902.22. The next best model algorithm was RidgeCV, followed by ElasticNetCV, Linear Regression, and finally KNNeighbors. The Features of most interest were:&lt;/p&gt;
+
+&lt;p&gt;Beta 0:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;180368.80&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Positive features&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;feature&lt;/th&gt;
+      &lt;th&gt;weight&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Gr Liv Area&lt;/td&gt;
+      &lt;td&gt;2.17e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Overall Qual&lt;/td&gt;
+      &lt;td&gt;1.27e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;BsmtFin SF&lt;/td&gt;
+      &lt;td&gt;7.61e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Kitchen Qual_Ex&lt;/td&gt;
+      &lt;td&gt;7.28e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Year Built&lt;/td&gt;
+      &lt;td&gt;6.87e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Total Bsmt SF&lt;/td&gt;
+      &lt;td&gt;6.38e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Garage Area&lt;/td&gt;
+      &lt;td&gt;5.76e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bldg Type_1Fam&lt;/td&gt;
+      &lt;td&gt;5.30e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bsmt Qual_Ex&lt;/td&gt;
+      &lt;td&gt;5.21e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Exter Qual_Ex&lt;/td&gt;
+      &lt;td&gt;4.80e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Neighborhood_NridgHt&lt;/td&gt;
+      &lt;td&gt;4.58e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Lot Area&lt;/td&gt;
+      &lt;td&gt;4.54e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Neighborhood_StoneBr&lt;/td&gt;
+      &lt;td&gt;4.30e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Overall Cond&lt;/td&gt;
+      &lt;td&gt;4.25e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bsmt Exposure_Gd&lt;/td&gt;
+      &lt;td&gt;4.07e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sale Type_New&lt;/td&gt;
+      &lt;td&gt;3.85e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Neighborhood_NoRidge&lt;/td&gt;
+      &lt;td&gt;3.65e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Mas Vnr Area&lt;/td&gt;
+      &lt;td&gt;3.15e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Functional_Typ&lt;/td&gt;
+      &lt;td&gt;2.52e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Foundation_PConc&lt;/td&gt;
+      &lt;td&gt;2.39e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Fireplaces&lt;/td&gt;
+      &lt;td&gt;2.34e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Exterior_Brk&lt;/td&gt;
+      &lt;td&gt;2.08e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Year Remod/Add&lt;/td&gt;
+      &lt;td&gt;2.04e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Neighborhood_Crawfor&lt;/td&gt;
+      &lt;td&gt;1.84e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Roof Matl_WdShngl&lt;/td&gt;
+      &lt;td&gt;1.56e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Neighborhood_Somerst&lt;/td&gt;
+      &lt;td&gt;1.31e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Neighborhood_GrnHill&lt;/td&gt;
+      &lt;td&gt;1.29e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Baths&lt;/td&gt;
+      &lt;td&gt;1.25e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1st Flr SF&lt;/td&gt;
+      &lt;td&gt;1.21e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Exterior_Cmnt&lt;/td&gt;
+      &lt;td&gt;9.88e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bsmt Fin_GLQ&lt;/td&gt;
+      &lt;td&gt;9.78e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Wood Deck SF&lt;/td&gt;
+      &lt;td&gt;7.05e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Garage Qual_Gd&lt;/td&gt;
+      &lt;td&gt;5.71e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Garage Qual_Ex&lt;/td&gt;
+      &lt;td&gt;4.89e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Garage Cars&lt;/td&gt;
+      &lt;td&gt;4.49e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Fireplace Qu_Gd&lt;/td&gt;
+      &lt;td&gt;4.24e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bsmt Baths&lt;/td&gt;
+      &lt;td&gt;3.45e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Mas Vnr Type_Stone&lt;/td&gt;
+      &lt;td&gt;3.15e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Neighborhood_BrkSide&lt;/td&gt;
+      &lt;td&gt;2.57e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Land Contour_HLS&lt;/td&gt;
+      &lt;td&gt;2.55e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Garage Type_BuiltIn&lt;/td&gt;
+      &lt;td&gt;2.39e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sale Type_Con&lt;/td&gt;
+      &lt;td&gt;1.95e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heating QC_Ex&lt;/td&gt;
+      &lt;td&gt;1.68e+01&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Negative features&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;feature&lt;/th&gt;
+      &lt;th&gt;weight&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Mas Vnr Type_BrkCmn&lt;/td&gt;
+      &lt;td&gt;-7.31e+01&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Neighborhood_Edwards&lt;/td&gt;
+      &lt;td&gt;-1.30e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Garage Type_Basment&lt;/td&gt;
+      &lt;td&gt;-1.84e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Condition_RR&lt;/td&gt;
+      &lt;td&gt;-2.76e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sale Type_ConLI&lt;/td&gt;
+      &lt;td&gt;-2.82e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heating_OthW&lt;/td&gt;
+      &lt;td&gt;-2.83e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bsmt Qual_TA&lt;/td&gt;
+      &lt;td&gt;-3.11e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Kitchen Qual_TA&lt;/td&gt;
+      &lt;td&gt;-3.12e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bsmt Fin_LwQ&lt;/td&gt;
+      &lt;td&gt;-3.27e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Exterior_Plywood&lt;/td&gt;
+      &lt;td&gt;-4.79e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Functional_Maj1&lt;/td&gt;
+      &lt;td&gt;-5.74e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Roof Style_Mansard&lt;/td&gt;
+      &lt;td&gt;-7.78e+02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bsmt Exposure_No&lt;/td&gt;
+      &lt;td&gt;-1.07e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sale Type_COD&lt;/td&gt;
+      &lt;td&gt;-1.13e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MS Zoning_RM&lt;/td&gt;
+      &lt;td&gt;-1.28e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heating QC_TA&lt;/td&gt;
+      &lt;td&gt;-1.51e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Condition_Street&lt;/td&gt;
+      &lt;td&gt;-1.59e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Exter Qual_TA&lt;/td&gt;
+      &lt;td&gt;-2.41e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Misc Feature_Elev&lt;/td&gt;
+      &lt;td&gt;-1.19e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Roof Matl_ClyTile&lt;/td&gt;
+      &lt;td&gt;-1.43e+04&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;business-recommendations&quot;&gt;Business Recommendations&lt;/h2&gt;
+&lt;p&gt;Since this model performs on par with existing consumer tools, I consider this a positive proof of concept. Next steps are continued model refinement as well as generalization to other home markets. Features that can be preloaded from municipal data can also be identified to develop a more streamlined UX environment and reduce the number of features that have to be manually assessed by the user.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;From my model comparisons I concluded that regularization methods such as Lasso and Ridge perform better than other modeling algorithms. This is likely due to many of the features having some level of colinearity that in other models would be outright excluded. For Lasso and Ridge they are still able to affect our predictions, however their impact is attenuated to avoid over-weighting. Since Lasso and Ridge both performed well, ElasticNet can probably be tuned to capture the best qualities of each model and increase predictive accuracy.&lt;/p&gt;
 </description>
         <pubDate>Sat, 01 Dec 2018 00:00:00 -0800</pubDate>
         <link>https://chrissinatra.dev/2018/12/01/project-ames_housing/</link>
