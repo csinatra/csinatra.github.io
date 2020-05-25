@@ -3,10 +3,10 @@
   <channel>
     <title>Chris Sinatra</title>
     <description>A collection of Data Science projects by Chris Sinatra</description>
-    <link>https://chrissinatra.dev</link>
-    <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 25 May 2020 10:48:44 -0700</pubDate>
-    <lastBuildDate>Mon, 25 May 2020 10:48:44 -0700</lastBuildDate>
+    <link>http://localhost:4000</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 25 May 2020 11:28:25 -0700</pubDate>
+    <lastBuildDate>Mon, 25 May 2020 11:28:25 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -251,8 +251,8 @@ table, th, td {
 &lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/crooner&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 01 Feb 2019 00:00:00 -0800</pubDate>
-        <link>https://chrissinatra.dev/2019/02/01/project-crooner/</link>
-        <guid isPermaLink="true">https://chrissinatra.dev/2019/02/01/project-crooner/</guid>
+        <link>http://localhost:4000/2019/02/01/project-crooner/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/02/01/project-crooner/</guid>
         
         <category>projects</category>
         
@@ -497,8 +497,8 @@ We can easily determine how likely a tweet will be classified as &lt;code class=
 &lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/nlt_twitter&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Jan 2019 00:00:00 -0800</pubDate>
-        <link>https://chrissinatra.dev/2019/01/01/project-nlt/</link>
-        <guid isPermaLink="true">https://chrissinatra.dev/2019/01/01/project-nlt/</guid>
+        <link>http://localhost:4000/2019/01/01/project-nlt/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/01/01/project-nlt/</guid>
         
         <category>projects</category>
         
@@ -579,8 +579,8 @@ We can easily determine how likely a tweet will be classified as &lt;code class=
 &lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Full project repo is available on &lt;a href=&quot;https://github.com/csinatra/portfolio/tree/master/reddit_NLP&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/b&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Jan 2019 00:00:00 -0800</pubDate>
-        <link>https://chrissinatra.dev/2019/01/01/project-reddit_NLP/</link>
-        <guid isPermaLink="true">https://chrissinatra.dev/2019/01/01/project-reddit_NLP/</guid>
+        <link>http://localhost:4000/2019/01/01/project-reddit_NLP/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/01/01/project-reddit_NLP/</guid>
         
         <category>NLP</category>
         
