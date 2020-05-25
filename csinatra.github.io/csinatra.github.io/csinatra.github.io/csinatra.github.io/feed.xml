@@ -5,8 +5,8 @@
     <description>A collection of Data Science projects by Chris Sinatra</description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 03 Apr 2019 15:09:19 -0700</pubDate>
-    <lastBuildDate>Wed, 03 Apr 2019 15:09:19 -0700</lastBuildDate>
+    <pubDate>Fri, 05 Apr 2019 10:46:34 -0700</pubDate>
+    <lastBuildDate>Fri, 05 Apr 2019 10:46:34 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -51,19 +51,71 @@ table, th, td {
 }
 &lt;/style&gt;
 
-&lt;p&gt;&lt;strong&gt;track_table:&lt;/strong&gt;
-| Feature        | SQL Type              | Data Type | Description                                                                                          |
-|—————-|———————–|———–|——————————————————————————————————|
-| track_id       | VARCHAR / PRIMARY KEY | string    | Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project. |
-| playlist_id    | VARCHAR               | string    | Unique playlist ID assigned by Spotify and used to group tracks by playlist.                         |
-| track_name     | VARCHAR               | string    | Name of the Track.                                                                                   |
-| artist_name    | VARCHAR               | string    | Name of the Artist.                                                                                  |
-| album_name     | VARCHAR               | string    | Name of the Album.                                                                                   |
-| playlist_name  | VARCHAR               | string    | Name of the Spotify playlist.                                                                        |
-| playlist_owner | VARCHAR               | string    | Name of the playlist creator (Spotify).                                                              |
-| lyrics         | JSON                  | string    | Lyrics queried from Genius (http://genius.com)                                                       |&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;track_table:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Feature&lt;/th&gt;
+      &lt;th&gt;SQL Type&lt;/th&gt;
+      &lt;th&gt;Data Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;track_id&lt;/td&gt;
+      &lt;td&gt;VARCHAR / PRIMARY KEY&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;playlist_id&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Unique playlist ID assigned by Spotify and used to group tracks by playlist.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;track_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Track.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;artist_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Artist.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;album_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Album.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;playlist_name&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the Spotify playlist.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;playlist_owner&lt;/td&gt;
+      &lt;td&gt;VARCHAR&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Name of the playlist creator (Spotify).&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lyrics&lt;/td&gt;
+      &lt;td&gt;JSON&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Lyrics queried from Genius (http://genius.com)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;p&gt;&lt;strong&gt;lyric_table:&lt;/strong&gt;
+s
 | Feature                | SQL Type              | Data Type | Description                                                                                          |
 |————————|———————–|———–|——————————————————————————————————|
 | track_id               | VARCHAR / PRIMARY KEY | string    | Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project. |

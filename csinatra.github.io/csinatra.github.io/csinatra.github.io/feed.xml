@@ -5,8 +5,8 @@
     <description>A collection of Data Science projects by Chris Sinatra</description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 05 Apr 2019 10:46:34 -0700</pubDate>
-    <lastBuildDate>Fri, 05 Apr 2019 10:46:34 -0700</lastBuildDate>
+    <pubDate>Fri, 05 Apr 2019 10:48:52 -0700</pubDate>
+    <lastBuildDate>Fri, 05 Apr 2019 10:48:52 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -114,19 +114,74 @@ table, th, td {
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;&lt;strong&gt;lyric_table:&lt;/strong&gt;
-s
-| Feature                | SQL Type              | Data Type | Description                                                                                          |
-|————————|———————–|———–|——————————————————————————————————|
-| track_id               | VARCHAR / PRIMARY KEY | string    | Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project. |
-| rep_ratio              | FLOAT                 | float     | Ratio of unique words to total words in the track                                                    |
-| total_words_track      | INT                   | int       | Word count for the track                                                                             |
-| unique_words_track     | INT                   | int       | Unique word count for the track                                                                      |
-| mean_len_words_track   | FLOAT                 | float     | Mean word length for the track                                                                       |
-| total_lines_track      | INT                   | int       | Line count for the track                                                                             |
-| unique_lines_track     | INT                   | int       | Unique line count for the track                                                                      |
-| mean_words_line        | FLOAT                 | float     | Mean word count per line in the track                                                                |
-| mean_unique_words_line | FLOAT                 | float     | Mean unique word count per line in the track&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;lyric_table:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Feature&lt;/th&gt;
+      &lt;th&gt;SQL Type&lt;/th&gt;
+      &lt;th&gt;Data Type&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;track_id&lt;/td&gt;
+      &lt;td&gt;VARCHAR / PRIMARY KEY&lt;/td&gt;
+      &lt;td&gt;string&lt;/td&gt;
+      &lt;td&gt;Unique track ID assigned by Spotify and used to trace back to song metadata throughout this project.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;rep_ratio&lt;/td&gt;
+      &lt;td&gt;FLOAT&lt;/td&gt;
+      &lt;td&gt;float&lt;/td&gt;
+      &lt;td&gt;Ratio of unique words to total words in the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;total_words_track&lt;/td&gt;
+      &lt;td&gt;INT&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Word count for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;unique_words_track&lt;/td&gt;
+      &lt;td&gt;INT&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Unique word count for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;mean_len_words_track&lt;/td&gt;
+      &lt;td&gt;FLOAT&lt;/td&gt;
+      &lt;td&gt;float&lt;/td&gt;
+      &lt;td&gt;Mean word length for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;total_lines_track&lt;/td&gt;
+      &lt;td&gt;INT&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Line count for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;unique_lines_track&lt;/td&gt;
+      &lt;td&gt;INT&lt;/td&gt;
+      &lt;td&gt;int&lt;/td&gt;
+      &lt;td&gt;Unique line count for the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;mean_words_line&lt;/td&gt;
+      &lt;td&gt;FLOAT&lt;/td&gt;
+      &lt;td&gt;float&lt;/td&gt;
+      &lt;td&gt;Mean word count per line in the track&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;mean_unique_words_line&lt;/td&gt;
+      &lt;td&gt;FLOAT&lt;/td&gt;
+      &lt;td&gt;float&lt;/td&gt;
+      &lt;td&gt;Mean unique word count per line in the track&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;h2 id=&quot;findings&quot;&gt;Findings&lt;a name=&quot;section5&quot;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Creating a python-based word-level text generator, I decided to implement a sliding window sequence to feed data into the model. This means that an input sequence of &lt;em&gt;m&lt;/em&gt; words will be used to generate an output sequence of &lt;em&gt;n&lt;/em&gt; words. Sequencing the data in this way has the benefit of providing a ground truth feature that can be used to score model accuracy during training.&lt;/p&gt;
@@ -403,11 +458,7 @@ table, th, td {
   &lt;li&gt;Logistic Regression:
     &lt;ul&gt;
       &lt;li&gt;Accuracy score: 98.03%&lt;/li&gt;
-      &lt;li&gt;
-        &lt;ul&gt;
-          &lt;li&gt;The accuracy scores are greater than our baseline model of 53.84%.&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
+      &lt;li&gt;The accuracy scores are greater than our baseline model of 53.84%.&lt;/li&gt;
       &lt;li&gt;The model is still slightly overfitting to the train data because the variance explained from train data is 0.31% higher than the variance explained in the test data.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
