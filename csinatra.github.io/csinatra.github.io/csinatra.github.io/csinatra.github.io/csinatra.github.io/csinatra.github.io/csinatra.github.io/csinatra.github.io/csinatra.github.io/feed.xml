@@ -5,13 +5,13 @@
     <description>A collection of Data Science projects by Chris Sinatra</description>
     <link>https://chrissinatra.dev</link>
     <atom:link href="https://chrissinatra.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 24 Mar 2019 21:27:28 -0700</pubDate>
-    <lastBuildDate>Sun, 24 Mar 2019 21:27:28 -0700</lastBuildDate>
+    <pubDate>Sun, 24 Mar 2019 21:36:53 -0700</pubDate>
+    <lastBuildDate>Sun, 24 Mar 2019 21:36:53 -0700</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>Crooner: A Love Song Lyric Generator</title>
-        <description>&lt;p&gt;The problem of de novo text generation has direct application in fields such as social media content generation, direct response marketing, predictive text generation, or text-based customer service correspondence. To explore this space, I built love-song lyric generator trained on a real-world dataset, returning an entirely new song lyrics based on a user generated seed text. Data was collected from Spotify and Genius lyrics and modeled with a LSTM Neural Network to create entirely new songs.&lt;/p&gt;
+        <description>&lt;p&gt;The problem of de novo text generation has direct application in fields such as social media, content generation, direct response marketing, predictive text, machine translation, and customer service automation. To explore this space, I built love-song lyric generator trained on a real-world dataset, returning entirely new song lyrics based on a user generated seed text. Data was collected from Spotify and Genius lyrics and modeled with a LSTM Neural Network to create entirely new songs.&lt;/p&gt;
 
 &lt;p&gt;This may also serve as a foundational underpinning for complete song or voice generation models which may be used across a variety of Enterprise applications.&lt;/p&gt;
 
