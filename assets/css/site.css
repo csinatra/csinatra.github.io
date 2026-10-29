@@ -1,0 +1,78 @@
+/* Landing page overrides on top of the theme's app.min.css */
+
+:root {
+  --accent: #2f6f5e;
+  --page: #f7f6f2;
+  --rule: #e6e6e6;
+}
+
+body,
+.header { background-color: var(--page); }
+
+/* Text column, ~70 characters per line */
+.about .grid { max-width: 40em; }
+
+#markdown p { margin-bottom: 2.25rem; }
+
+#markdown a,
+.mast__text a {
+  color: var(--accent);
+  border-bottom: 0;
+  box-shadow: inset 0 -2px 0 rgba(47, 111, 94, .3);
+}
+
+#markdown a:hover,
+.mast__text a:hover { box-shadow: inset 0 -2px 0 var(--accent); }
+
+#markdown .photo {
+  align-self: center;
+  min-width: 0;
+  width: 180px;
+  height: 180px;
+  margin: 1rem 0 2.25rem;
+  border-radius: 50%;
+  /* The theme adds click-to-zoom to every content image; opt the photo out */
+  pointer-events: none;
+}
+
+/* Current work */
+#markdown .section {
+  margin: 1rem 0 1.25rem;
+  color: var(--accent);
+  font-size: .85em;
+  letter-spacing: .12em;
+}
+
+.card {
+  margin-bottom: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.card__title {
+  display: inline-block;
+  margin-bottom: .5rem;
+  font-size: 1.15em;
+  font-weight: 700;
+}
+
+#markdown .card p {
+  margin-bottom: 0;
+  font-size: 1em;
+  text-align: left;
+}
+
+/* Light footer */
+.footer {
+  color: #000;
+  background-color: var(--page);
+  border-top: 1px solid var(--rule);
+}
+
+.footer .footer__container { margin-top: 0; }
+
+.footer__social a { color: #000; }
+
+.footer__social a:hover { color: var(--accent); }
